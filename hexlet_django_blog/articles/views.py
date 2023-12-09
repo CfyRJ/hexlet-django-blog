@@ -112,3 +112,14 @@ class ArticleFormEditView(View):
                 'form': form,
             }
         )
+
+
+class ArticleFormDeleteView(View):
+    def post(self, request, *aargs, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        if article:
+            messages.add_message(request, messages.SUCCESS, 'Article deleted successfully')
+            article.delete()
+
+        return redirect('article_index')
